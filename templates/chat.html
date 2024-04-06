@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="row g-0">
+        <div class="col-12 col-lg-5 col-xl-4 px-4 d-md-block my-3">
+            <h3>Chats</h3>
+            <div class="d-flex align-items-center">
+                <div class="input-group my-3">
+                    <input type="text" id="searchBar" class="form-control" placeholder="Искать по имени">
+                    <button class="btn btn-outline-secondary">Поиск</button>
+                </div>
+            </div>
+            <div class="list-group">
+                <li href="#" class="list-group-item border-0" id="chatsLoading">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1 ml-3">
+                            Loading...
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+        <div class="col-12 col-lg-7 col-xl-8">
+            <h3 class="my-3">UserName</h3>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
