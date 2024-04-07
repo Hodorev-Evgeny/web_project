@@ -1,8 +1,19 @@
 import flask
+import sqlite3
+
+from flask import request
 from data import db_session
 
 app = flask.Flask(__name__)
 app.secret_key = 'secret'
+
+con = con = sqlite3.connect('db/data.db')
+cur = con.cursor()
+que = """SELECT users.name
+             FROM users"""
+data = list(cur.execute(que))
+message = []
+name_users = 'Me'
 
 
 @app.route('/')
@@ -10,9 +21,10 @@ def index():
     return flask.render_template('chat.html')
 
 
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    return flask.render_template('chat2.html')
+    message.append(request.values.get('text'))
+    return flask.render_template('chat2.html', data=data, message=message, name_users=name_users)
 
 
 @app.route('/settings')
