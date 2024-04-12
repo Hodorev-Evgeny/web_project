@@ -17,4 +17,3 @@ class Message(SqlAlchemyBase):
                                 sqlalchemy.ForeignKey("users.id"))
     to_id = sqlalchemy.Column(sqlalchemy.Integer,
                               sqlalchemy.ForeignKey("users.id"))
-    user = orm.relation('User')
