@@ -9,7 +9,7 @@
 <body>
     <div class="profile-form">
         <h1>User Profile Settings</h1>
-        <form action="#" method="post">
+        <form action="#" method="post" enctype="multipart/form-data">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
@@ -17,7 +17,8 @@
             <input type="email" id="email" name="email" required>
 
             <label for="avatar">Avatar URL:</label>
-            <input type="url" id="avatar" name="avatar">
+            <input type="file" name="f">
+            <input type="submit" id="file" value="Отправить" required>
 
             <label for="bio">Bio:</label>
             <textarea id="bio" name="bio"></textarea>
