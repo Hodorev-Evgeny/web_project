@@ -3,9 +3,10 @@
 <div class="card">
     <div class="row g-0">
         <div class="col-12 col-lg-5 col-xl-4 px-4 d-md-block my-3">
-          <h3>Настройки</h3>
-              <a class="nav-link" href="/settings_account">Настройки учётки</a>
-              <a class="nav-link" href="/appearance">Внешний вид</a>
+            <h3>Настройки</h3>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="/settings">Профиль</a>
+            </div>
             <div class="list-group">
                 <li href="#" class="list-group-item border-0" id="chatsLoading">
                     <div class="d-flex align-items-start">
@@ -13,9 +14,29 @@
                 </li>
             </div>
         </div>
-        <div class="col-12 col-lg-7 col-xl-8">
-            <h3 class="my-3">Профиль</h3>
-
+        <div class="col-12 col-lg-7 col-xl-8 my-3">
+            <h3>Настройки профиля</h3>
+            <form action="/settings" method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.about.label(class="form-label") }}
+                    {{ form.about(class="form-control") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.photo.label(class="form-label") }}
+                    {{ form.photo(class="form-control") }}
+                </div>
+                {% for error in form.form_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
         </div>
     </div>
 </div>

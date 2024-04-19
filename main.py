@@ -1,12 +1,14 @@
+import os.path
+
 import flask
 from flask_socketio import SocketIO
-
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from data.message import Message
 from data.user import User
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
+from forms.profile_form import ProfileForm
 from uuid import uuid4
 
 app = flask.Flask(__name__)
@@ -51,6 +53,40 @@ def chat_page(to_id=None):
             users.add(session.query(User).filter(User.id == chat.from_id).first())
     return flask.render_template('chat.html', chats=users, token=current_user.token, to_id=to_id,
                                  user=current_user.safe_serialize(), is_chat=to_id is not None)
+
+
+@app.route('/photo/<int:userid>')
+def user_photo(userid):
+    if not os.path.exists('static/images/' + str(userid) + '.png'):
+        return flask.send_file('static/images/default.png')
+    return flask.send_file('static/images/' + str(userid) + '.png')
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    form = ProfileForm()
+    if flask.request.method == 'GET':
+        form.name.data = current_user.name
+        form.about.data = current_user.about
+        return flask.render_template('settings.html', user=current_user.safe_serialize(), form=form)
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        user = session.query(User).filter(User.id == current_user.id).first()
+        user.name = form.name.data
+        user.about = form.about.data
+        if form.photo.data:
+            print(form.photo.data.filename)
+            if not form.photo.data.filename.endswith('.png'):
+                form.form_errors.append('Разрешены только файлы .png')
+                return flask.render_template('settings.html', user=current_user.safe_serialize(), form=form)
+            user.photo = flask.request.files['photo'].read()
+            with open(f'static/images/{current_user.id}.png', 'wb') as f:
+                f.write(user.photo)
+        session.commit()
+        return flask.redirect('/settings')
+    return flask.render_template('settings.html', user=current_user.safe_serialize(), form=form)
+
 
 
 @sock.on('auth')

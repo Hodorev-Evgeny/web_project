@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="my-3">Результаты поиска: {{ query }} ({{ count }})</h3>
+<div class="list-group">
+    {% for user in users %}
+    <a href="{{ url_for('chat_page', to_id=user.id) }}" class="list-group-item list-group-item-action d-flex">
+        <img src="/photo/{{ user.id }}" class="rounded-circle" style="width: 80px; height: 80px">
+        <div class="ms-3">
+            <p>{{ user.name }}</p>
+            <small class="text-muted">{{ user.about }}</small>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

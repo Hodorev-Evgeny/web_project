@@ -18,7 +18,10 @@
         </div>
         {% if is_chat %}
         <div class="col-12 col-lg-7 col-xl-8 px-4 d-md-block my-3">
-            <h3 id="chatName"></h3>
+            <div class="d-flex">
+                <img src="/photo/{{ to_id }}" class="rounded-circle" style="width: 40px; height: 40px;">
+                <h3 id="chatName" class="ms-3"></h3>
+            </div>
             <div class="my-3" id="messages" style="overflow-y: scroll; height: calc(100vh - 200px);">
             </div>
             <div class="input-group my-3">
