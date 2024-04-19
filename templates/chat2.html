@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "appearance.html" %}
 {% block content %}
 		<h1 class="h3 mb-3">Messages</h1>
 
@@ -35,7 +35,7 @@
 					<div class="py-2 px-4 border-bottom d-none d-lg-block">
 						<div class="d-flex align-items-center py-1">
 							<div class="position-relative">
-								<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+								<img src={{ img }} class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
 							</div>
 							<div class="flex-grow-1 pl-3">
 								<strong>{{name_users}}</strong>
@@ -54,7 +54,7 @@
 								{% for mes in message %}
 									{% if mes != None%}
 										<div>
-											<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+											<img src="static/img/HoLSo.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
 										</div>
 										<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
 											<div class="font-weight-bold mb-1">{{name_users}}</div>

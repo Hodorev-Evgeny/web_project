@@ -22,10 +22,10 @@ def home():
                  FROM users"""
     data = list(cur.execute(que))
     message = []
-    name_users = 'Me'
+    name_users = 'HoLSo'
     user_id = '1'
     message.append(request.values.get('text'))
-    return flask.render_template('chat2.html', data=data, message=message, name_users=name_users)
+    return flask.render_template('chat2.html', data=data, message=message, name_users=name_users, img=f'static/img/{name_users}.png')
 
 
 @app.route('/settings')
@@ -44,7 +44,7 @@ def settings_account():
         file=request.files['f']
         if file.filename != '':
             if file.filename.endswith('.png'):
-                file.save(f'img/{user_name}.png')
+                file.save(f'static/img/{user_name}.png')
             else:
                 return 'Invalid file format. Please upload a PNG image', 400
 
