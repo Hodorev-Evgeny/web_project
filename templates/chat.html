@@ -1,29 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card">
+<div class="card" style="max-height: 100vh;">
     <div class="row g-0">
         <div class="col-12 col-lg-5 col-xl-4 px-4 d-md-block my-3">
-            <h3>Chats</h3>
-            <div class="d-flex align-items-center">
-                <div class="input-group my-3">
-                    <input type="text" id="searchBar" class="form-control" placeholder="Искать по имени">
-                    <button class="btn btn-outline-secondary">Поиск</button>
-                </div>
+            <h3>Сообщения</h3>
+            <div class="input-group my-3">
+                <input type="text" id="searchBar" class="form-control" placeholder="Искать по имени">
+                <button class="btn btn-outline-secondary" id="searchButton">Поиск</button>
             </div>
-            <div class="list-group">
-                <li href="#" class="list-group-item border-0" id="chatsLoading">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-grow-1 ml-3">
-                            Loading...
-                        </div>
-                    </div>
-                </li>
+            <div class="list-group list-group-flush">
+                {% for chat in chats %}
+                <a href="{{ url_for('chat_page', to_id=chat.id) }}" class="list-group-item list-group-item-action {{ 'active' if to_id == chat.id }}">
+                    {{ chat.name }}
+                </a>
+                {% endfor %}
             </div>
         </div>
-        <div class="col-12 col-lg-7 col-xl-8">
-            <h3 class="my-3">UserName</h3>
-
+        {% if is_chat %}
+        <div class="col-12 col-lg-7 col-xl-8 px-4 d-md-block my-3">
+            <h3 id="chatName"></h3>
+            <div class="my-3" id="messages" style="overflow-y: scroll; height: calc(100vh - 200px);">
+            </div>
+            <div class="input-group my-3">
+                <input type="text" id="messageBar" class="form-control" placeholder="Сообщение...">
+                <button class="btn btn-outline-secondary" id="sendButton">-></button>
+            </div>
         </div>
+        {% endif %}
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<p style="display: none;" id="token" data-token="{{ token }}"></p>
+{% if to_id %}
+    <p style="display: none;" id="target" data-to="{{ to_id }}"></p>
+{% endif %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" integrity="sha512-11t8Q+vY9JlCrr+PveZKTYJq8n7O09Y5X/pk/aMd3vJugSvu4xOunGEUzaADqL3I8cZKE/pBwwCfXzDkRJh2sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% if is_chat %}
+    <script src="/static/js/chat.js"></script>
+{% endif %}
+<script>
+    let searchBar = $('#searchBar');
+    searchBar.on('keypress', function (e) {
+        if (e.key === 'Enter') {
+            if (searchBar.val() == '') return;
+            e.preventDefault();
+            document.location.href = `/search?name=${searchBar.val()}`;
+        }
+    });
+    $('#searchButton').click(function () {
+        if (searchBar.val() == '') return;
+        document.location.href = `/search?name=${searchBar.val()}`
+    })
+</script>
 {% endblock %}

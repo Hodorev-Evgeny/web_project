@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       {% if title %}
-          {{ title }} - Chat
+          {{ title }} - Сообщения
       {% else %}
-          Chat
+          Сообщения
       {% endif %}
     </title>
     <link
@@ -29,26 +29,26 @@
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Chat</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false">
-          <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand" href="#">Сообщения</a>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/home">Чаты</a>
+              <a class="nav-link" href="/">Чаты</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/settings">Настройки</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Выход</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container h-100">
       {% block content %}
       {% endblock %}
     </div>
